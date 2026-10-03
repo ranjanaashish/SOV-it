@@ -12,6 +12,7 @@
 ---
 
 **Developed by Team Astra**  
+*As part of the ADROSONIC Build Hackathon***
 *In collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)***
 
 </div>
@@ -20,14 +21,14 @@
 
 ## Executive Summary
 
-Underwriting commercial property insurance requires processing unstructured, non-standardized client Statements of Values (SOV) spreadsheets. Real-world client submissions frequently contain unaligned column headers, mixed alphanumeric notations, compound value errors, missing geographic attributes, and inconsistent building occupancy classifications. These defects lead to operational delays, accumulation blindspots, and manual data-entry overhead.
+Underwriting commercial property insurance requires processing unstructured, non-standardised client Statements of Values (SOV) spreadsheets. Real-world client submissions frequently contain unaligned column headers, mixed alphanumeric notations, compound value errors, missing geographic attributes, and inconsistent building occupancy classifications. These defects lead to operational delays, accumulation blindspots, and manual data-entry overhead.
 
-**SOV-it** is an enterprise-grade agentic platform that automates the ingestion, mapping, validation, and transformation of complex client SOVs into standardized, verified schemas.
+**SOV-it** is an enterprise-grade agentic platform that automates the ingestion, mapping, validation, and transformation of complex client SOVs into standardised, verified schemas.
 
 ### Core Architectural Principle
 > **The language model proposes; deterministic logic and human underwriters verify and commit.**
 
-The platform enforces **100 percent human-in-the-loop governance**, persistent graph-based institutional memory across submissions, and a certified transformation gate guaranteeing zero schema drift.
+The platform enforces **100 per cent human-in-the-loop governance**, persistent graph-based institutional memory across submissions, and a certified transformation gate guaranteeing zero schema drift.
 
 ---
 
