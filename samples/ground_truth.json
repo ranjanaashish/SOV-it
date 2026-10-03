@@ -1,0 +1,261 @@
+{
+  "sample1_clean.xlsx": {
+    "sheet": "SOV",
+    "header_row": 1,
+    "mapping": {
+      "Location Number": "Reference",
+      "Street Address": "Address",
+      "City": "City",
+      "State": "State",
+      "Zip Code": "Zip",
+      "County": "County",
+      "Country": "Country",
+      "Building Value": "Building Value",
+      "Contents Value": "Contents",
+      "Business Income": "BI",
+      "Occupancy": "Occupancy",
+      "Construction Type": "Construction",
+      "Number of Stories": "Storeys",
+      "Number of Buildings": "Number of Buildings",
+      "Year Built": "Year Built",
+      "Sprinklered": "Fire Sprinklers (Y/N)",
+      "Other Value": "Other",
+      "TIV": null
+    },
+    "anomalies": [
+      {
+        "row": 5,
+        "field": "Building Value",
+        "type": "negative_value",
+        "value": -250000.0
+      },
+      {
+        "row": 9,
+        "field": "Year Built",
+        "type": "future_year",
+        "value": 2091
+      },
+      {
+        "row": 13,
+        "field": "Contents",
+        "type": "currency_format",
+        "value": "$125,000"
+      },
+      {
+        "row": 17,
+        "field": "Storeys",
+        "type": "below_min",
+        "value": 0
+      },
+      {
+        "row": 20,
+        "field": "Fire Sprinklers (Y/N)",
+        "type": "sprinkler_variant",
+        "value": "Yes"
+      },
+      {
+        "row": 24,
+        "field": "City",
+        "type": "missing",
+        "value": null
+      },
+      {
+        "row": 27,
+        "field": "Zip",
+        "type": "placeholder",
+        "value": "N/A"
+      },
+      {
+        "row": 32,
+        "field": "State",
+        "type": "state_full_name",
+        "value": "Texas"
+      }
+    ]
+  },
+  "sample2_abbrev.xlsx": {
+    "sheet": "Location Schedule",
+    "header_row": 4,
+    "mapping": {
+      "Loc #": "Reference",
+      "Addr 1": "Address",
+      "Town": "City",
+      "St": "State",
+      "Postal": "Zip",
+      "Parish/County": "County",
+      "Cntry": "Country",
+      "Insured Building Amount": "Building Value",
+      "BPP": "Contents",
+      "Income Loss Exposure": "BI",
+      "Occ Desc": "Occupancy",
+      "Const Class": "Construction",
+      "# Flrs": "Storeys",
+      "No. Bldgs": "Number of Buildings",
+      "Year of Erection": "Year Built",
+      "Fire Prot.": "Fire Sprinklers (Y/N)",
+      "Misc TIV": "Other",
+      "Flood Zone": null,
+      "EQ Deductible": null
+    },
+    "anomalies": [
+      {
+        "row": 7,
+        "field": "Building Value",
+        "type": "currency_format",
+        "value": "$1,250,000"
+      },
+      {
+        "row": 10,
+        "field": "Building Value",
+        "type": "negative_value",
+        "value": -75000.0
+      },
+      {
+        "row": 14,
+        "field": "Year Built",
+        "type": "future_year",
+        "value": 2035
+      },
+      {
+        "row": 17,
+        "field": "Fire Sprinklers (Y/N)",
+        "type": "sprinkler_variant",
+        "value": "13R"
+      },
+      {
+        "row": 19,
+        "field": "Fire Sprinklers (Y/N)",
+        "type": "sprinkler_invalid",
+        "value": "Partial"
+      },
+      {
+        "row": 22,
+        "field": "Zip",
+        "type": "zip_plus4",
+        "value": "78701-1234"
+      },
+      {
+        "row": 25,
+        "field": "Storeys",
+        "type": "text_number",
+        "value": "3 floors"
+      },
+      {
+        "row": 29,
+        "field": "Contents",
+        "type": "placeholder",
+        "value": "TBD"
+      },
+      {
+        "row": 33,
+        "field": "Number of Buildings",
+        "type": "below_min",
+        "value": 0
+      },
+      {
+        "row": 38,
+        "field": "Year Built",
+        "type": "placeholder",
+        "value": "unknown"
+      },
+      {
+        "row": 42,
+        "field": "BI",
+        "type": "type_error",
+        "value": "abc"
+      },
+      {
+        "row": 46,
+        "field": "Address",
+        "type": "missing",
+        "value": null
+      },
+      {
+        "row": 49,
+        "field": "Reference",
+        "type": "duplicate_reference",
+        "value": "P-001"
+      },
+      {
+        "row": 5,
+        "field": "Reference",
+        "type": "duplicate_reference",
+        "value": "P-001"
+      }
+    ]
+  },
+  "sample3_multisheet.xlsx": {
+    "sheet": "Property Schedule",
+    "header_row": 6,
+    "mapping": {
+      "Bldg ID": "Reference",
+      "Property Address": "Address",
+      "City": "City",
+      "State": "State",
+      "ZIP": "Zip",
+      "Bldg Value": "Building Value",
+      "Contents": "Contents",
+      "Occupancy Type": "Occupancy",
+      "Construction": "Construction",
+      "Stories": "Storeys",
+      "Yr Built": "Year Built",
+      "Sprinklers": "Fire Sprinklers (Y/N)"
+    },
+    "anomalies": [
+      {
+        "row": 8,
+        "field": "Building Value",
+        "type": "missing",
+        "value": null
+      },
+      {
+        "row": 11,
+        "field": "Year Built",
+        "type": "implausible_year",
+        "value": 1650
+      },
+      {
+        "row": 15,
+        "field": "Storeys",
+        "type": "non_integer",
+        "value": 2.5
+      },
+      {
+        "row": 17,
+        "field": "Building Value",
+        "type": "magnitude_suffix",
+        "value": "1.2M"
+      },
+      {
+        "row": 20,
+        "field": "Fire Sprinklers (Y/N)",
+        "type": "sprinkler_variant",
+        "value": "no"
+      },
+      {
+        "row": 26,
+        "field": "Contents",
+        "type": "placeholder",
+        "value": "-"
+      },
+      {
+        "row": 30,
+        "field": "City",
+        "type": "whitespace",
+        "value": "  Miami "
+      },
+      {
+        "row": 34,
+        "field": "Year Built",
+        "type": "missing",
+        "value": null
+      },
+      {
+        "row": 42,
+        "field": "(row)",
+        "type": "total_row",
+        "value": "Total"
+      }
+    ]
+  }
+}

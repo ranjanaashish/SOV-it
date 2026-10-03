@@ -1,0 +1,14 @@
+# Core (all open-source, permissive licences)
+pandas>=2.1          # BSD-3
+openpyxl>=3.1        # MIT
+pydantic>=2.5        # MIT
+rapidfuzz>=3.0       # MIT
+networkx>=3.4        # BSD-3
+numpy>=1.26          # BSD-3
+requests>=2.31       # Apache-2.0
+streamlit>=1.43      # Apache-2.0 (container keys -> sticky pipeline bar)
+altair>=5.0          # BSD-3 (ships with streamlit; data-quality charts)
+
+# Semantic matching (FR-2 pass 2). Optional at runtime: the code falls back to
+# tri-gram vectors if this is missing, but install it for best accuracy.
+sentence-transformers>=2.7   # Apache-2.0 (pulls torch; CPU wheels are fine)

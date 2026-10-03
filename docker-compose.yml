@@ -1,0 +1,20 @@
+# docker compose up -d   ->  UI on http://localhost:8501
+# first run: docker compose exec ollama ollama pull qwen2.5:7b-instruct
+services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes: [ollama:/root/.ollama]
+    ports: ["11434:11434"]
+    # deploy: { resources: { reservations: { devices: [{ capabilities: [gpu] }] } } }   # enable for GPU
+  app:
+    build: .
+    depends_on: [ollama]
+    environment:
+      LLM_BASE_URL: http://ollama:11434/v1
+      LLM_MODEL: qwen2.5:7b-instruct
+      KG_PATH: /app/data/knowledge_graph.json
+    volumes: [kg:/app/data]
+    ports: ["8501:8501"]
+volumes:
+  ollama: {}
+  kg: {}
