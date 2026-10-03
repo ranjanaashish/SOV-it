@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 530" width="100%" height="100%" style="background:#141518; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Cyan Arrow Marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38BDF8" />
+    </marker>
+    <!-- Card Drop Shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <style>
+    .card { fill: #1E2128; stroke: #475569; stroke-width: 1.2px; }
+    .card-gate { fill: #1E2433; stroke: #64748B; stroke-width: 1.5px; }
+    .text-title { fill: #FFFFFF; font-weight: 700; font-size: 12px; text-anchor: middle; }
+    .text-subtitle { fill: #94A3B8; font-weight: 400; font-size: 10.5px; text-anchor: middle; }
+    .text-bullet { fill: #CBD5E1; font-weight: 400; font-size: 10px; text-anchor: start; }
+    .pill-bg { fill: #181A20; stroke: #475569; stroke-width: 1px; rx: 4px; }
+    .pill-text { fill: #E2E8F0; font-size: 9.5px; text-anchor: middle; font-weight: 500; }
+    .wire { stroke: #64748B; stroke-width: 1.25px; fill: none; }
+    .wire-dashed { stroke: #64748B; stroke-width: 1.25px; stroke-dasharray: 4,4; fill: none; }
+  </style>
+
+  <!-- ==================== CONNECTING WIRES ==================== -->
+
+  <!-- Gate to Agent 4 (Approved Items Only) -->
+  <path d="M 330 105 L 700 105 L 700 240" class="wire" marker-end="url(#arrow)" />
+
+  <!-- Gate to Knowledge Graph (On Export Sign-Off) -->
+  <path d="M 275 145 L 377 145 L 377 265" class="wire-dashed" marker-end="url(#arrow)" />
+
+  <!-- Gate to A3 (Reject with Note - Iterative Re-reasoning) -->
+  <path d="M 175 145 L 70 145 L 70 487 L 195 487" class="wire-dashed" marker-end="url(#arrow)" />
+
+  <!-- A3 to Gate (Direct flow up to human review gate) -->
+  <path d="M 217 475 L 217 215 L 240 195" class="wire" marker-end="url(#arrow)" />
+
+  <!-- Messy SOV to Agent 1 -->
+  <path d="M 205 278 L 205 310" class="wire" marker-end="url(#arrow)" />
+
+  <!-- Agent 1 to A2 -->
+  <path d="M 267 390 L 267 425" class="wire" marker-end="url(#arrow)" />
+
+  <!-- Agent 1 to A3 -->
+  <path d="M 180 390 L 180 445 L 207 445 L 207 475" class="wire" marker-end="url(#arrow)" />
+
+  <!-- A2 to A3 -->
+  <path d="M 255 455 L 255 480 L 239 480" class="wire" marker-end="url(#arrow)" />
+
+  <!-- KG to A2 (Evidence Lookup) -->
+  <path d="M 335 346 L 335 385 L 275 385 L 275 425" class="wire-dashed" marker-end="url(#arrow)" />
+
+  <!-- KG to A3 (Allowed Values & Rules) -->
+  <path d="M 405 346 L 405 495 L 239 495" class="wire-dashed" marker-end="url(#arrow)" />
+
+  <!-- Agent 4 to Three Outputs -->
+  <path d="M 700 320 L 700 342 L 537 342 L 537 360" class="wire" marker-end="url(#arrow)" />
+  <path d="M 700 320 L 700 360" class="wire" marker-end="url(#arrow)" />
+  <path d="M 700 320 L 700 342 L 872 342 L 872 360" class="wire" marker-end="url(#arrow)" />
+
+  <!-- ==================== PILL BADGES ==================== -->
+
+  <!-- Approved Items Only Pill -->
+  <rect x="645" y="93" width="110" height="23" class="pill-bg" />
+  <text x="700" y="108" class="pill-text">Approved Items Only</text>
+
+  <!-- On Export Sign-Off Pill -->
+  <rect x="312" y="185" width="130" height="30" class="pill-bg" />
+  <text x="377" y="198" class="pill-text">On Export Sign-Off</text>
+  <text x="377" y="210" class="pill-text" fill="#94A3B8">(Learn approved edges &amp; vectors)</text>
+
+  <!-- Reject with Note Pill -->
+  <rect x="20" y="380" width="100" height="32" class="pill-bg" />
+  <text x="70" y="394" class="pill-text">Reject with Note</text>
+  <text x="70" y="406" class="pill-text" fill="#94A3B8">(Iterative Re-reasoning)</text>
+
+  <!-- Evidence Lookup Pill -->
+  <rect x="290" y="373" width="90" height="20" class="pill-bg" />
+  <text x="335" y="387" class="pill-text">Evidence Lookup</text>
+
+  <!-- Allowed Values & Rules Pill -->
+  <rect x="350" y="483" width="110" height="20" class="pill-bg" />
+  <text x="405" y="497" class="pill-text">Allowed Values &amp; Rules</text>
+
+  <!-- ==================== NODES / CARDS ==================== -->
+
+  <!-- 1. Human-in-the-Loop Review Gate (Diamond) -->
+  <g filter="url(#shadow)">
+    <polygon points="240,25 330,105 240,185 150,105" class="card-gate" />
+    <text x="240" y="68" class="text-title">Human-in-the-Loop Review Gate</text>
+    <text x="240" y="82" class="text-subtitle">(Streamlit UI)</text>
+    <text x="182" y="103" class="text-bullet">&#8226; Approve / Edit / Reject</text>
+    <text x="182" y="118" class="text-bullet">&#8226; Approve All &#8805; 0.90</text>
+    <text x="182" y="133" class="text-bullet">&#8226; Full before/after preview</text>
+  </g>
+
+  <!-- 2. Messy SOV Spreadsheet -->
+  <g filter="url(#shadow)">
+    <rect x="140" y="232" width="130" height="46" rx="5" class="card" />
+    <text x="205" y="251" class="text-title">Messy SOV Spreadsheet</text>
+    <text x="205" y="266" class="text-subtitle">(.xlsx / .csv)</text>
+  </g>
+
+  <!-- 3. Agent 1: Sheet Discovery -->
+  <g filter="url(#shadow)">
+    <rect x="125" y="310" width="160" height="80" rx="5" class="card" />
+    <text x="205" y="328" class="text-title">Agent 1: Sheet Discovery</text>
+    <text x="137" y="344" class="text-bullet">&#8226; Scans top 30 rows</text>
+    <text x="137" y="357" class="text-bullet">&#8226; Heuristic header scoring</text>
+    <text x="137" y="370" class="text-bullet">&#8226; Sheet classification &amp; rank</text>
+    <text x="137" y="383" class="text-bullet">&#8226; Handles merged cells &amp; totals</text>
+  </g>
+
+  <!-- 4. A2 -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="425" width="44" height="30" rx="4" class="card" />
+    <text x="267" y="445" class="text-title">A2</text>
+  </g>
+
+  <!-- 5. A3 -->
+  <g filter="url(#shadow)">
+    <rect x="195" y="475" width="44" height="30" rx="4" class="card" />
+    <text x="217" y="495" class="text-title">A3</text>
+  </g>
+
+  <!-- 6. Knowledge Graph & Vector Memory (Cylinder) -->
+  <g filter="url(#shadow)">
+    <!-- Cylinder Body -->
+    <path d="M 290 270 
+             A 87 11 0 0 1 464 270 
+             L 464 336 
+             A 87 11 0 0 1 290 336 
+             Z" class="card" />
+    <!-- Cylinder Top Ellipse -->
+    <ellipse cx="377" cy="270" rx="87" ry="11" class="card" />
+    <text x="377" y="293" class="text-title">Knowledge Graph &amp; Vector Memory</text>
+    <text x="377" y="307" class="text-subtitle">(NetworkX + NumPy Vectors)</text>
+    <text x="315" y="323" class="text-bullet">&#8226; Learned mappings</text>
+    <text x="315" y="336" class="text-bullet">&#8226; Past rejections</text>
+    <text x="315" y="349" class="text-bullet">&#8226; Insurance rules &amp; synonyms</text>
+  </g>
+
+  <!-- 7. Agent 4: Controlled Transformation -->
+  <g filter="url(#shadow)">
+    <rect x="610" y="240" width="180" height="80" rx="5" class="card" />
+    <text x="700" y="259" class="text-title">Agent 4: Controlled Transformation</text>
+    <text x="622" y="276" class="text-bullet">&#8226; 100% Deterministic plain code</text>
+    <text x="622" y="290" class="text-bullet">&#8226; Reindexes to strict 17 columns</text>
+    <text x="622" y="304" class="text-bullet">&#8226; Casts types &amp; preserves blanks</text>
+    <text x="622" y="318" class="text-bullet">&#8226; Logs every single row alteration</text>
+  </g>
+
+  <!-- 8. Cleaned_SOV.xlsx -->
+  <g filter="url(#shadow)">
+    <rect x="475" y="360" width="125" height="44" rx="5" class="card" />
+    <text x="537" y="379" class="text-title">Cleaned_SOV.xlsx</text>
+    <text x="537" y="394" class="text-subtitle">(Strict 17-column format)</text>
+  </g>
+
+  <!-- 9. Audit_Log.xlsx / .json -->
+  <g filter="url(#shadow)">
+    <rect x="620" y="360" width="160" height="44" rx="5" class="card" />
+    <text x="700" y="379" class="text-title">Audit_Log.xlsx / .json</text>
+    <text x="700" y="394" class="text-subtitle">(Full provenance &amp; reviewer log)</text>
+  </g>
+
+  <!-- 10. Processing_Summary.json -->
+  <g filter="url(#shadow)">
+    <rect x="800" y="360" width="145" height="44" rx="5" class="card" />
+    <text x="872" y="379" class="text-title">Processing_Summary.json</text>
+    <text x="872" y="394" class="text-subtitle">(Execution metrics &amp; stats)</text>
+  </g>
+
+</svg>

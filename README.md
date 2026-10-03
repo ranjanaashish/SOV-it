@@ -12,7 +12,7 @@
 ---
 
 **Developed by Team Astra**  
-*As part of the ADROSONIC Build Hackathon***
+*As part of the ADROSONIC Build Hackathon*  
 *In collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)***
 
 </div>
@@ -34,43 +34,65 @@ The platform enforces **100 per cent human-in-the-loop governance**, persistent 
 
 ## High-Level System Architecture
 
+<div align="center">
+  <img src="assets/architecture_diagram.svg" alt="SOV-it High-Level System Architecture" width="100%" />
+</div>
+
+<details>
+<summary><b>Mermaid Diagram Specification</b></summary>
+
 ```mermaid
-flowchart LR
-    %% Nodes
-    A["Raw Client SOV<br/>(Excel / CSV)"]
-    B["Agent 1<br/>Sheet & Header Discovery"]
-    C["Agent 2<br/>Hierarchical Schema Mapper"]
-    D["Agent 3<br/>Quality & Anomaly Engine"]
-    E{"Underwriter Review Gate<br/>(Human-in-the-Loop)"}
-    F["Agent 4<br/>Controlled Transformation"]
-    G["Standardized Output<br/>Cleaned_SOV.xlsx"]
-    H["Audit Log & Provenance<br/>Audit_Log.xlsx / JSON"]
-    KG[("Knowledge Graph<br/>& Vector Memory")]
+flowchart TD
+    %% Human-in-the-Loop Review Gate at Top
+    GATE{"Human-in-the-Loop Review Gate<br/>(Streamlit UI)<br/>- Approve / Edit / Reject<br/>- Approve All >= 0.90<br/>- Full before/after preview"}
 
-    %% Sequential Pipeline Flow
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E -->|Approved Transformations| F
-    E -.->|Rejection Feedback Loop| D
-    F --> G
-    F --> H
+    %% Ingestion and Discovery
+    SOV["Messy SOV Spreadsheet<br/>(.xlsx / .csv)"]
+    A1["Agent 1: Sheet Discovery<br/>- Scans top 30 rows<br/>- Heuristic header scoring<br/>- Sheet classification & rank<br/>- Handles merged cells & totals"]
+    A2["A2"]
+    A3["A3"]
 
-    %% Memory Interactions
-    C <===>|Bi-directional Lookup| KG
-    F -.->|Sign-off Updates| KG
+    %% Memory
+    KG[("Knowledge Graph & Vector Memory<br/>(NetworkX + NumPy Vectors)<br/>- Learned mappings<br/>- Past rejections<br/>- Insurance rules & synonyms")]
+
+    %% Transformation and Outputs
+    A4["Agent 4: Controlled Transformation<br/>- 100% Deterministic plain code<br/>- Reindexes to strict 17 columns<br/>- Casts types & preserves blanks<br/>- Logs every single row alteration"]
+    
+    OUT1["Cleaned_SOV.xlsx<br/>(Strict 17-column format)"]
+    OUT2["Audit_Log.xlsx / .json<br/>(Full provenance & reviewer log)"]
+    OUT3["Processing_Summary.json<br/>(Execution metrics & stats)"]
+
+    %% Sequential & Pipeline Connections
+    SOV --> A1
+    A1 --> A2
+    A1 --> A3
+    A2 --> A3
+    A3 --> GATE
+
+    %% Feedback and Memory Connections
+    GATE -.->|"Reject with Note<br/>(Iterative Re-reasoning)"| A3
+    GATE -.->|"On Export Sign-Off<br/>(Learn approved edges & vectors)"| KG
+    KG -.->|"Evidence Lookup"| A2
+    KG -.->|"Allowed Values & Rules"| A3
+
+    %% Transformation & Output Connections
+    GATE -->|"Approved Items Only"| A4
+    A4 --> OUT1
+    A4 --> OUT2
+    A4 --> OUT3
 
     %% Styling
-    classDef default fill:#1A2C47,stroke:#7BDCB5,stroke-width:1.5px,color:#FFFFFF,font-family:sans-serif;
-    classDef gate fill:#223859,stroke:#FBBF24,stroke-width:2px,color:#FFFFFF,font-family:sans-serif;
-    classDef output fill:#142338,stroke:#10B981,stroke-width:1.5px,color:#FFFFFF,font-family:sans-serif;
-    classDef memory fill:#1E293B,stroke:#8B5CF6,stroke-width:1.5px,color:#FFFFFF,font-family:sans-serif;
+    classDef default fill:#1E2128,stroke:#475569,stroke-width:1.2px,color:#FFFFFF,font-family:sans-serif;
+    classDef gate fill:#1E2433,stroke:#64748B,stroke-width:1.5px,color:#FFFFFF,font-family:sans-serif;
+    classDef memory fill:#1E2128,stroke:#475569,stroke-width:1.2px,color:#FFFFFF,font-family:sans-serif;
+    classDef output fill:#1E2128,stroke:#475569,stroke-width:1.2px,color:#FFFFFF,font-family:sans-serif;
 
-    class E gate;
-    class G,H output;
+    class GATE gate;
     class KG memory;
+    class OUT1,OUT2,OUT3 output;
 ```
+
+</details>
 
 ---
 
