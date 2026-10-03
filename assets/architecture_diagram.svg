@@ -1,175 +1,215 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 530" width="100%" height="100%" style="background:#141518; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 550" width="100%" height="100%" style="background:#13151A; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <defs>
     <!-- Cyan Arrow Marker -->
     <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#38BDF8" />
     </marker>
-    <!-- Card Drop Shadow -->
+    <!-- Subtle Card Drop Shadow -->
     <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
       <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.5"/>
     </filter>
   </defs>
 
   <style>
-    .card { fill: #1E2128; stroke: #475569; stroke-width: 1.2px; }
-    .card-gate { fill: #1E2433; stroke: #64748B; stroke-width: 1.5px; }
-    .text-title { fill: #FFFFFF; font-weight: 700; font-size: 12px; text-anchor: middle; }
-    .text-subtitle { fill: #94A3B8; font-weight: 400; font-size: 10.5px; text-anchor: middle; }
-    .text-bullet { fill: #CBD5E1; font-weight: 400; font-size: 10px; text-anchor: start; }
-    .pill-bg { fill: #181A20; stroke: #475569; stroke-width: 1px; rx: 4px; }
-    .pill-text { fill: #E2E8F0; font-size: 9.5px; text-anchor: middle; font-weight: 500; }
+    .card { fill: #1E222B; stroke: #475569; stroke-width: 1.2px; }
+    .card-gate { fill: #1E2638; stroke: #FBBF24; stroke-width: 1.5px; }
+    .card-output { fill: #172626; stroke: #10B981; stroke-width: 1.2px; }
+    .card-llm { fill: #202030; stroke: #818CF8; stroke-width: 1.2px; }
+    .text-title { fill: #FFFFFF; font-weight: 700; font-size: 11.5px; text-anchor: middle; }
+    .text-title-green { fill: #34D399; font-weight: 700; font-size: 11.5px; text-anchor: middle; }
+    .text-subtitle { fill: #94A3B8; font-weight: 400; font-size: 10px; text-anchor: middle; }
+    .text-bullet { fill: #CBD5E1; font-weight: 400; font-size: 9.5px; text-anchor: start; }
+    .pill-bg { fill: #181B22; stroke: #475569; stroke-width: 1px; rx: 4px; }
+    .pill-text { fill: #E2E8F0; font-size: 9px; text-anchor: middle; font-weight: 500; }
     .wire { stroke: #64748B; stroke-width: 1.25px; fill: none; }
     .wire-dashed { stroke: #64748B; stroke-width: 1.25px; stroke-dasharray: 4,4; fill: none; }
   </style>
 
   <!-- ==================== CONNECTING WIRES ==================== -->
 
-  <!-- Gate to Agent 4 (Approved Items Only) -->
-  <path d="M 330 105 L 700 105 L 700 240" class="wire" marker-end="url(#arrow)" />
+  <!-- Gate to Agent 4 (Approved Transformations Only) -->
+  <path d="M 530 95 L 815 95 L 815 205" class="wire" marker-end="url(#arrow)" />
 
   <!-- Gate to Knowledge Graph (On Export Sign-Off) -->
-  <path d="M 275 145 L 377 145 L 377 265" class="wire-dashed" marker-end="url(#arrow)" />
+  <path d="M 445 155 L 445 250" class="wire-dashed" marker-end="url(#arrow)" />
 
-  <!-- Gate to A3 (Reject with Note - Iterative Re-reasoning) -->
-  <path d="M 175 145 L 70 145 L 70 487 L 195 487" class="wire-dashed" marker-end="url(#arrow)" />
+  <!-- Gate to Agent 3 (Reject with Note - Adaptive Re-Reasoning Loop) -->
+  <path d="M 270 95 L 18 95 L 18 450 L 35 450" class="wire-dashed" marker-end="url(#arrow)" />
 
-  <!-- A3 to Gate (Direct flow up to human review gate) -->
-  <path d="M 217 475 L 217 215 L 240 195" class="wire" marker-end="url(#arrow)" />
+  <!-- Agent 3 to Gate (Recommendations flow to review gate) -->
+  <path d="M 255 450 L 295 450 L 295 160 L 335 130" class="wire" marker-end="url(#arrow)" />
 
   <!-- Messy SOV to Agent 1 -->
-  <path d="M 205 278 L 205 310" class="wire" marker-end="url(#arrow)" />
+  <path d="M 145 66 L 145 88" class="wire" marker-end="url(#arrow)" />
 
-  <!-- Agent 1 to A2 -->
-  <path d="M 267 390 L 267 425" class="wire" marker-end="url(#arrow)" />
+  <!-- Agent 1 to Agent 2 -->
+  <path d="M 145 190 L 145 212" class="wire" marker-end="url(#arrow)" />
 
-  <!-- Agent 1 to A3 -->
-  <path d="M 180 390 L 180 445 L 207 445 L 207 475" class="wire" marker-end="url(#arrow)" />
+  <!-- Agent 2 to Agent 3 -->
+  <path d="M 145 340 L 145 362" class="wire" marker-end="url(#arrow)" />
 
-  <!-- A2 to A3 -->
-  <path d="M 255 455 L 255 480 L 239 480" class="wire" marker-end="url(#arrow)" />
+  <!-- KG to Agent 2 (Evidence & Vector Lookup) -->
+  <path d="M 320 300 L 255 300" class="wire-dashed" marker-end="url(#arrow)" />
 
-  <!-- KG to A2 (Evidence Lookup) -->
-  <path d="M 335 346 L 335 385 L 275 385 L 275 425" class="wire-dashed" marker-end="url(#arrow)" />
+  <!-- KG to Agent 3 (Underwriting Rules & Allowed Values) -->
+  <path d="M 345 390 L 345 420 L 255 420" class="wire-dashed" marker-end="url(#arrow)" />
 
-  <!-- KG to A3 (Allowed Values & Rules) -->
-  <path d="M 405 346 L 405 495 L 239 495" class="wire-dashed" marker-end="url(#arrow)" />
+  <!-- LLM to Agent 2 & Agent 3 (Inference Assist) -->
+  <path d="M 320 495 L 255 495" class="wire-dashed" marker-end="url(#arrow)" />
 
-  <!-- Agent 4 to Three Outputs -->
-  <path d="M 700 320 L 700 342 L 537 342 L 537 360" class="wire" marker-end="url(#arrow)" />
-  <path d="M 700 320 L 700 360" class="wire" marker-end="url(#arrow)" />
-  <path d="M 700 320 L 700 342 L 872 342 L 872 360" class="wire" marker-end="url(#arrow)" />
+  <!-- Agent 4 to Three Output Artifacts -->
+  <path d="M 815 330 L 815 350 L 685 350 L 685 370" class="wire" marker-end="url(#arrow)" />
+  <path d="M 815 330 L 815 370" class="wire" marker-end="url(#arrow)" />
+  <path d="M 815 330 L 815 350 L 1125 350 L 1125 370" class="wire" marker-end="url(#arrow)" />
 
   <!-- ==================== PILL BADGES ==================== -->
 
-  <!-- Approved Items Only Pill -->
-  <rect x="645" y="93" width="110" height="23" class="pill-bg" />
-  <text x="700" y="108" class="pill-text">Approved Items Only</text>
+  <!-- Approved Transformations Only Pill -->
+  <rect x="740" y="83" width="150" height="23" class="pill-bg" />
+  <text x="815" y="98" class="pill-text">Approved Transformations Only</text>
 
   <!-- On Export Sign-Off Pill -->
-  <rect x="312" y="185" width="130" height="30" class="pill-bg" />
-  <text x="377" y="198" class="pill-text">On Export Sign-Off</text>
-  <text x="377" y="210" class="pill-text" fill="#94A3B8">(Learn approved edges &amp; vectors)</text>
+  <rect x="375" y="172" width="140" height="28" class="pill-bg" />
+  <text x="445" y="184" class="pill-text">On Export Sign-Off</text>
+  <text x="445" y="196" class="pill-text" fill="#94A3B8">(Learn approved edges &amp; vectors)</text>
 
   <!-- Reject with Note Pill -->
-  <rect x="20" y="380" width="100" height="32" class="pill-bg" />
-  <text x="70" y="394" class="pill-text">Reject with Note</text>
-  <text x="70" y="406" class="pill-text" fill="#94A3B8">(Iterative Re-reasoning)</text>
+  <rect x="24" y="275" width="110" height="30" class="pill-bg" />
+  <text x="79" y="287" class="pill-text">Reject with Note</text>
+  <text x="79" y="299" class="pill-text" fill="#94A3B8">(Adaptive Re-Reasoning)</text>
 
-  <!-- Evidence Lookup Pill -->
-  <rect x="290" y="373" width="90" height="20" class="pill-bg" />
-  <text x="335" y="387" class="pill-text">Evidence Lookup</text>
+  <!-- Evidence & Vector Lookup Pill -->
+  <rect x="252" y="288" width="70" height="20" class="pill-bg" />
+  <text x="287" y="302" class="pill-text">Graph Lookup</text>
 
-  <!-- Allowed Values & Rules Pill -->
-  <rect x="350" y="483" width="110" height="20" class="pill-bg" />
-  <text x="405" y="497" class="pill-text">Allowed Values &amp; Rules</text>
+  <!-- Rules & Values Pill -->
+  <rect x="260" y="408" width="82" height="20" class="pill-bg" />
+  <text x="301" y="422" class="pill-text">Rules &amp; Values</text>
+
+  <!-- LLM Reasoning Pill -->
+  <rect x="260" y="483" width="80" height="20" class="pill-bg" />
+  <text x="300" y="497" class="pill-text">LLM Inference</text>
 
   <!-- ==================== NODES / CARDS ==================== -->
 
   <!-- 1. Human-in-the-Loop Review Gate (Diamond) -->
   <g filter="url(#shadow)">
-    <polygon points="240,25 330,105 240,185 150,105" class="card-gate" />
-    <text x="240" y="68" class="text-title">Human-in-the-Loop Review Gate</text>
-    <text x="240" y="82" class="text-subtitle">(Streamlit UI)</text>
-    <text x="182" y="103" class="text-bullet">&#8226; Approve / Edit / Reject</text>
-    <text x="182" y="118" class="text-bullet">&#8226; Approve All &#8805; 0.90</text>
-    <text x="182" y="133" class="text-bullet">&#8226; Full before/after preview</text>
+    <polygon points="400,20 530,95 400,170 270,95" class="card-gate" />
+    <text x="400" y="58" class="text-title" fill="#FBBF24">Human-in-the-Loop Review Gate</text>
+    <text x="400" y="73" class="text-subtitle">(Streamlit UI Workbench)</text>
+    <text x="330" y="93" class="text-bullet">&#8226; Approve / Inline Edit / Reject with Note</text>
+    <text x="330" y="108" class="text-bullet">&#8226; 1-Click Bulk Approve (Confidence &#8805; 0.90)</text>
+    <text x="330" y="123" class="text-bullet">&#8226; Cell-Level Live Before / After Diff Preview</text>
+    <text x="330" y="138" class="text-bullet">&#8226; Underwriter Identity &amp; Sign-Off Logging</text>
   </g>
 
   <!-- 2. Messy SOV Spreadsheet -->
   <g filter="url(#shadow)">
-    <rect x="140" y="232" width="130" height="46" rx="5" class="card" />
-    <text x="205" y="251" class="text-title">Messy SOV Spreadsheet</text>
-    <text x="205" y="266" class="text-subtitle">(.xlsx / .csv)</text>
+    <rect x="35" y="20" width="220" height="46" rx="5" class="card" />
+    <text x="145" y="39" class="text-title">Messy Client SOV Spreadsheet</text>
+    <text x="145" y="54" class="text-subtitle">(.xlsx, .xls, .xlsm, .csv multi-tab input)</text>
   </g>
 
-  <!-- 3. Agent 1: Sheet Discovery -->
+  <!-- 3. Agent 1: Sheet & Header Discovery (EXPANDED) -->
   <g filter="url(#shadow)">
-    <rect x="125" y="310" width="160" height="80" rx="5" class="card" />
-    <text x="205" y="328" class="text-title">Agent 1: Sheet Discovery</text>
-    <text x="137" y="344" class="text-bullet">&#8226; Scans top 30 rows</text>
-    <text x="137" y="357" class="text-bullet">&#8226; Heuristic header scoring</text>
-    <text x="137" y="370" class="text-bullet">&#8226; Sheet classification &amp; rank</text>
-    <text x="137" y="383" class="text-bullet">&#8226; Handles merged cells &amp; totals</text>
+    <rect x="35" y="88" width="220" height="102" rx="5" class="card" />
+    <text x="145" y="107" class="text-title">Agent 1: Sheet &amp; Header Discovery</text>
+    <text x="47" y="124" class="text-bullet">&#8226; Scans candidate header rows (1&#8211;30)</text>
+    <text x="47" y="139" class="text-bullet">&#8226; Text density &amp; insurance domain scoring</text>
+    <text x="47" y="154" class="text-bullet">&#8226; Automated sheet classification &amp; rank</text>
+    <text x="47" y="169" class="text-bullet">&#8226; Filters banners, totals rows &amp; merged cells</text>
+    <text x="47" y="184" class="text-bullet">&#8226; Zero assumed format; preserves source copy</text>
   </g>
 
-  <!-- 4. A2 -->
+  <!-- 4. Agent 2: Hierarchical Schema Mapper (EXPANDED) -->
   <g filter="url(#shadow)">
-    <rect x="245" y="425" width="44" height="30" rx="4" class="card" />
-    <text x="267" y="445" class="text-title">A2</text>
+    <rect x="35" y="212" width="220" height="128" rx="5" class="card" />
+    <text x="145" y="231" class="text-title">Agent 2: Hierarchical Schema Mapper</text>
+    <text x="47" y="248" class="text-bullet">&#8226; Tier 0: Knowledge graph historical memory</text>
+    <text x="47" y="263" class="text-bullet">&#8226; Tier 1: Curated synonyms &amp; RapidFuzz (&#8805;0.75)</text>
+    <text x="47" y="278" class="text-bullet">&#8226; Tier 2: Semantic SBERT &amp; value profiling</text>
+    <text x="47" y="293" class="text-bullet">&#8226; Tier 3: Zero-shot LLM reasoning pass</text>
+    <text x="47" y="308" class="text-bullet">&#8226; Maps source columns &#8594; 17 standard fields</text>
+    <text x="47" y="323" class="text-bullet">&#8226; Flags unmapped columns for human review</text>
   </g>
 
-  <!-- 5. A3 -->
+  <!-- 5. Agent 3: Data Quality & Anomaly Engine (EXPANDED) -->
   <g filter="url(#shadow)">
-    <rect x="195" y="475" width="44" height="30" rx="4" class="card" />
-    <text x="217" y="495" class="text-title">A3</text>
+    <rect x="35" y="362" width="220" height="152" rx="5" class="card" />
+    <text x="145" y="381" class="text-title">Agent 3: Data Quality &amp; Anomaly Engine</text>
+    <text x="47" y="398" class="text-bullet">&#8226; 20+ underwriting deterministic rules</text>
+    <text x="47" y="413" class="text-bullet">&#8226; Multipliers (K/M/B), currency &amp; negatives</text>
+    <text x="47" y="428" class="text-bullet">&#8226; ISO construction &amp; occupancy normalizer</text>
+    <text x="47" y="443" class="text-bullet">&#8226; ZIP code &amp; state consistency verification</text>
+    <text x="47" y="458" class="text-bullet">&#8226; Year Built plausibility (1700 &#8804; Year &#8804; Now)</text>
+    <text x="47" y="473" class="text-bullet">&#8226; Adaptive neural re-reasoning on reject note</text>
+    <text x="47" y="488" class="text-bullet">&#8226; Composite Data Quality Score (0&#8211;100)</text>
+    <text x="47" y="503" class="text-bullet">&#8226; Hotspot matrix &amp; compound error detection</text>
   </g>
 
   <!-- 6. Knowledge Graph & Vector Memory (Cylinder) -->
   <g filter="url(#shadow)">
     <!-- Cylinder Body -->
-    <path d="M 290 270 
-             A 87 11 0 0 1 464 270 
-             L 464 336 
-             A 87 11 0 0 1 290 336 
+    <path d="M 320 262 
+             A 115 12 0 0 1 550 262 
+             L 550 366 
+             A 115 12 0 0 1 320 366 
              Z" class="card" />
     <!-- Cylinder Top Ellipse -->
-    <ellipse cx="377" cy="270" rx="87" ry="11" class="card" />
-    <text x="377" y="293" class="text-title">Knowledge Graph &amp; Vector Memory</text>
-    <text x="377" y="307" class="text-subtitle">(NetworkX + NumPy Vectors)</text>
-    <text x="315" y="323" class="text-bullet">&#8226; Learned mappings</text>
-    <text x="315" y="336" class="text-bullet">&#8226; Past rejections</text>
-    <text x="315" y="349" class="text-bullet">&#8226; Insurance rules &amp; synonyms</text>
+    <ellipse cx="435" cy="262" rx="115" ry="12" class="card" />
+    <text x="435" y="286" class="text-title">Knowledge Graph &amp; Vector Memory</text>
+    <text x="435" y="300" class="text-subtitle">(NetworkX Graph + NumPy Vector Space)</text>
+    <text x="335" y="317" class="text-bullet">&#8226; Persistent memory across client submissions</text>
+    <text x="335" y="331" class="text-bullet">&#8226; Learned column mappings &amp; past rejections</text>
+    <text x="335" y="345" class="text-bullet">&#8226; 17-field canonical schema &amp; synonym sets</text>
+    <text x="335" y="359" class="text-bullet">&#8226; Dual-scope reset (Learned memory vs Seed)</text>
   </g>
 
-  <!-- 7. Agent 4: Controlled Transformation -->
+  <!-- 7. Pluggable LLM Inference Engine -->
   <g filter="url(#shadow)">
-    <rect x="610" y="240" width="180" height="80" rx="5" class="card" />
-    <text x="700" y="259" class="text-title">Agent 4: Controlled Transformation</text>
-    <text x="622" y="276" class="text-bullet">&#8226; 100% Deterministic plain code</text>
-    <text x="622" y="290" class="text-bullet">&#8226; Reindexes to strict 17 columns</text>
-    <text x="622" y="304" class="text-bullet">&#8226; Casts types &amp; preserves blanks</text>
-    <text x="622" y="318" class="text-bullet">&#8226; Logs every single row alteration</text>
+    <rect x="320" y="458" width="230" height="56" rx="5" class="card-llm" />
+    <text x="435" y="476" class="text-title" fill="#C7D2FE">Pluggable Multi-Provider LLM Engine</text>
+    <text x="335" y="492" class="text-bullet">&#8226; Groq (Llama-3.3-70B), Ollama (Local/Private)</text>
+    <text x="335" y="505" class="text-bullet">&#8226; OpenAI / Gemini / Rules-Only Deterministic</text>
   </g>
 
-  <!-- 8. Cleaned_SOV.xlsx -->
+  <!-- 8. Agent 4: Controlled Transformation (EXPANDED) -->
   <g filter="url(#shadow)">
-    <rect x="475" y="360" width="125" height="44" rx="5" class="card" />
-    <text x="537" y="379" class="text-title">Cleaned_SOV.xlsx</text>
-    <text x="537" y="394" class="text-subtitle">(Strict 17-column format)</text>
+    <rect x="680" y="205" width="270" height="125" rx="5" class="card" />
+    <text x="815" y="226" class="text-title">Agent 4: Controlled Transformation</text>
+    <text x="815" y="241" class="text-subtitle">(Certified Underwriting Gate)</text>
+    <text x="695" y="259" class="text-bullet">&#8226; 100% Deterministic execution (Zero hallucination)</text>
+    <text x="695" y="274" class="text-bullet">&#8226; Applies only human-approved modifications</text>
+    <text x="695" y="289" class="text-bullet">&#8226; Reindexes &amp; strictly types 17 target columns</text>
+    <text x="695" y="304" class="text-bullet">&#8226; Cell-level cryptographic provenance logging</text>
+    <text x="695" y="319" class="text-bullet">&#8226; Retains immutable raw source spreadsheet</text>
   </g>
 
-  <!-- 9. Audit_Log.xlsx / .json -->
+  <!-- 9. Output 1: Cleaned_SOV.xlsx -->
   <g filter="url(#shadow)">
-    <rect x="620" y="360" width="160" height="44" rx="5" class="card" />
-    <text x="700" y="379" class="text-title">Audit_Log.xlsx / .json</text>
-    <text x="700" y="394" class="text-subtitle">(Full provenance &amp; reviewer log)</text>
+    <rect x="580" y="370" width="210" height="66" rx="5" class="card-output" />
+    <text x="685" y="391" class="text-title-green">Cleaned_SOV.xlsx</text>
+    <text x="685" y="405" class="text-subtitle">(Strict 17-Column Schema)</text>
+    <text x="592" y="420" class="text-bullet">&#8226; Cleaned numeric values &amp; ISO codes</text>
+    <text x="592" y="432" class="text-bullet">&#8226; Preserves unmapped raw columns</text>
   </g>
 
-  <!-- 10. Processing_Summary.json -->
+  <!-- 10. Output 2: Audit_Log.xlsx / .json -->
   <g filter="url(#shadow)">
-    <rect x="800" y="360" width="145" height="44" rx="5" class="card" />
-    <text x="872" y="379" class="text-title">Processing_Summary.json</text>
-    <text x="872" y="394" class="text-subtitle">(Execution metrics &amp; stats)</text>
+    <rect x="800" y="370" width="210" height="66" rx="5" class="card-output" />
+    <text x="905" y="391" class="text-title-green">Audit_Log.xlsx / .json</text>
+    <text x="905" y="405" class="text-subtitle">(Full Provenance &amp; Compliance Trail)</text>
+    <text x="812" y="420" class="text-bullet">&#8226; Row, column, old value &#8594; new value</text>
+    <text x="812" y="432" class="text-bullet">&#8226; Reviewer identity, method &amp; rationale</text>
+  </g>
+
+  <!-- 11. Output 3: Processing_Summary.json -->
+  <g filter="url(#shadow)">
+    <rect x="1020" y="370" width="210" height="66" rx="5" class="card-output" />
+    <text x="1125" y="391" class="text-title-green">Processing_Summary.json</text>
+    <text x="1125" y="405" class="text-subtitle">(Execution Metrics &amp; Health KPI)</text>
+    <text x="1032" y="420" class="text-bullet">&#8226; Composite DQ score &amp; completeness %</text>
+    <text x="1032" y="432" class="text-bullet">&#8226; Stage runtimes &amp; LLM latency stats</text>
   </g>
 
 </svg>
