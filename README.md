@@ -172,11 +172,15 @@ SOV-it supports zero-friction switching between local open-weights models and ul
 
 ---
 
-## 👥 Team Astra
+## 👥 Contributors & Team Astra
 
-Developed with pride by **Team Astra**:
-- **Aashish Ranjan** — Lead Architecture & Engineering ([@ranjanaashish](https://github.com/ranjanaashish))
-- In collaboration with **Adrosonic** & **Birla Institute of Technology, Mesra (BIT Mesra)**
+Developed with pride by **Team Astra** in collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)**:
+
+| Contributor | Profile & Contributions |
+| :--- | :--- |
+| **Aashish Ranjan** | Core Architecture, Multi-Agent Orchestration & Streamlit UI ([@ranjanaashish](https://github.com/ranjanaashish)) |
+| **Aastha Chhabra** | Machine Learning, Model Research & Underwriting Data Intelligence ([@aasthaaachhabra](https://github.com/aasthaaachhabra)) |
+| **ADROSONIC Hackathon** | Hackathon Host, Insurance Domain Governance & Advisory ([@ADROSONICHackathon](https://github.com/ADROSONICHackathon)) |
 
 ---
 
