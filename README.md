@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ SOV-it
+# SOV-it
 ### **Agentic SOV Cleansing & Intelligence System**
 *An autonomous, multi-agent AI system for underwriting data transformation, schema mapping, and property anomaly reasoning.*
 
