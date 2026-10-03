@@ -19,7 +19,7 @@ from sov_agent.state import StageGateError
 from sov_agent.text import to_display
 from sov_agent.values import allowed_choices, coerce_value, norm_value
 
-st.set_page_config(page_title="SOV-it — Agentic SOV Cleansing & Intelligence System", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="SOV-it — Agentic SOV Cleansing & Intelligence System", layout="wide")
 st.markdown(ui.CSS, unsafe_allow_html=True)
 
 
@@ -36,7 +36,7 @@ for k, v in {"state": None, "files": None, "upload_key": None, "flash": [], "ope
 KEEP, BLANK = "(keep original)", "(blank)"
 
 
-def flash(msg: str, icon: str = "✅") -> None:
+def flash(msg: str, icon: str | None = None) -> None:
     ss.flash.append((msg, icon))
 
 
@@ -52,7 +52,7 @@ def cb_accept(rid: str) -> None:
         ss.files = None
         flash("Accepted")
     except ValueError as exc:
-        flash(str(exc), "⚠️")
+        flash(f"Error: {exc}")
 
 
 def cb_reject(rid: str) -> None:
@@ -69,9 +69,9 @@ def cb_reject(rid: str) -> None:
         new = next((r for r in ss.state.recommendations if r.id not in before), None)
         if new is not None:
             ss.open_rec = new.id
-            flash(f"Re-reasoned · {new.interpretation or new.title}", "🧠" if new.status == "pending" else "❓")
+            flash(f"Re-reasoned · {new.interpretation or new.title}")
     except ValueError as exc:
-        flash(str(exc), "⚠️")
+        flash(f"Error: {exc}")
 
 
 def cb_edit_mapping(rid: str) -> None:
@@ -82,7 +82,7 @@ def cb_edit_mapping(rid: str) -> None:
         ss[f"editing_{rid}"] = False
         flash(f"Mapping saved: {choice}")
     except ValueError as exc:
-        flash(str(exc), "⚠️")
+        flash(f"Error: {exc}")
 
 
 def cb_edit_values(rid: str, groups: list[tuple[str, str]]) -> None:
@@ -93,7 +93,7 @@ def cb_edit_values(rid: str, groups: list[tuple[str, str]]) -> None:
             continue
         vmap[display] = None if val == BLANK else val
     if not vmap:
-        flash("Nothing changed — pick at least one new value.", "ℹ️")
+        flash("No changes made — select at least one new value.")
         return
     try:
         orc.decide(ss.state, rid, "edit", reviewer(), edit={"value_map": vmap})
@@ -102,7 +102,7 @@ def cb_edit_values(rid: str, groups: list[tuple[str, str]]) -> None:
         ss.open_rec = rid
         flash("Edit saved: " + ", ".join(f"{k} → {v if v is not None else '(blank)'}" for k, v in vmap.items()))
     except ValueError as exc:
-        flash(str(exc), "⚠️")
+        flash(f"Error: {exc}")
 
 
 def cb_approve_all() -> None:
@@ -116,7 +116,7 @@ def cb_reset_kg() -> None:
     ss["kg_confirm"] = False
     b, a = res["before"], res["after"]
     flash(f"Knowledge graph reset: {sum(b['nodes'].values())} → {sum(a['nodes'].values())} nodes, "
-          f"{b['edges'].get('MAPS_TO', 0)} → 0 learned mappings, {b['vector_memory']} → 0 vectors", "🧹")
+          f"{b['edges'].get('MAPS_TO', 0)} → 0 learned mappings, {b['vector_memory']} → 0 vectors")
 
 
 # ---------------------------------------------------------------- top header banner & pipeline
@@ -146,7 +146,7 @@ with st.sidebar:
     st.divider()
 
     # -------------------------------------------------------- LLM Provider Settings
-    with st.expander("⚙️ LLM & Provider Settings", expanded=False):
+    with st.expander("LLM & Provider Settings", expanded=False):
         presets = {
             "Groq (Fast Cloud)": {
                 "base_url": "https://api.groq.com/openai/v1",
@@ -247,7 +247,7 @@ with st.sidebar:
                                        help="Uncheck to send only header names (never cell values) for privacy.")
             orc.agent2.send_samples = send_samples
 
-            if st.button("🔌 Test Connection", use_container_width=True):
+            if st.button("Test Connection", use_container_width=True):
                 with st.spinner("Pinging endpoint…"):
                     orc.llm._available = None
                     if orc.llm.available():
@@ -256,12 +256,12 @@ with st.sidebar:
                         st.error("Connection failed. Check URL, model name, and API key.")
 
     llm_ok = orc.llm.available()
-    st.markdown(f"**LLM** {'🟢 online' if llm_ok else '⚪ offline'}  \n`{orc.llm.label}`")
+    st.markdown(f"**LLM Status:** {'[ONLINE]' if llm_ok else '[OFFLINE]'}  \n`{orc.llm.label}`")
     if not llm_ok:
         if orc.llm.disabled:
             st.caption("LLM disabled → running in rules-only deterministic mode.")
         elif pinfo.get("needs_key") and not orc.llm.api_key:
-            st.caption("Enter API key in ⚙️ LLM Settings above to connect.")
+            st.caption("Enter API key in LLM Settings above to connect.")
         else:
             st.caption("Rules-only mode: deterministic rationales, no LLM pass. Start Ollama to enable.")
     else:
@@ -272,7 +272,7 @@ with st.sidebar:
     kgs = orc.kg.stats()
     st.markdown(f"**Knowledge graph:** {sum(kgs['nodes'].values())} nodes · "
                 f"{kgs['edges'].get('MAPS_TO', 0)} learned mappings · {kgs['vector_memory']} vectors")
-    with st.popover("🧹 Reset knowledge graph", use_container_width=True):
+    with st.popover("Reset knowledge graph", use_container_width=True):
         st.radio("What to reset", ["Learned memory only", "Everything (rebuild from seed)"], key="kg_scope",
                  help="Learned memory = approved/rejected mappings, co-occurrence edges and vectors. "
                       "The 17-field schema, synonyms, value sets and rules are always re-seeded.")
@@ -283,7 +283,10 @@ with st.sidebar:
                   use_container_width=True)
 
 for msg, icon in ss.flash:
-    st.toast(msg, icon=icon)
+    if icon:
+        st.toast(msg, icon=icon)
+    else:
+        st.toast(msg)
 ss.flash = []
 state = ss.state
 
@@ -321,7 +324,7 @@ if state is None:
                 </div>
             </div>
             <div style="margin-top:16px; font-size:13px; color:#FFFFFF; font-weight:600; display:flex; align-items:center; gap:8px;">
-                👈 Upload an SOV file (.xlsx, .csv) in the sidebar to begin
+                Upload an SOV file (.xlsx, .csv) in the sidebar to begin
             </div>
         </div>
         """,
@@ -330,11 +333,11 @@ if state is None:
     st.stop()
 
 if state.stages["ingest"].status == "error":
-    st.error(f"⚠️ {state.stages['ingest'].message}")
+    st.error(f"Error: {state.stages['ingest'].message}")
     st.stop()
 
-badge = {"pending": "🟡 pending", "approved": "🟢 approved", "edited": "🔵 edited",
-         "rejected": "🔴 rejected", "escalated": "🟠 needs you", "superseded": "⚪ superseded"}
+badge = {"pending": "[Pending]", "approved": "[Approved]", "edited": "[Edited]",
+         "rejected": "[Rejected]", "escalated": "[Action Required]", "superseded": "[Superseded]"}
 open_n = sum(1 for r in state.active_recs() if r.is_open)
 c1, c2, c3, c4, c5 = st.columns(5)
 c1.metric("Sheet", state.selected_sheet or "—", f"header row {state.header_row}" if state.header_row else None,
@@ -345,14 +348,14 @@ c4.metric("Data quality score", state.quality.get("dq_score", "—"))
 c5.metric("Open review items", open_n)
 
 tabs = st.tabs([
-    "📑 Sheets & header",
-    "🧭 Mappers",
-    "🩺 Quality report",
-    "✅ Review",
-    "👀 Before / after",
-    "📦 Export & audit",
-    "🕸️ Knowledge graph",
-    "📜 Event log",
+    "Sheets & header",
+    "Mappers",
+    "Quality report",
+    "Review",
+    "Before / after",
+    "Export & audit",
+    "Knowledge graph",
+    "Event log",
 ])
 T_SHEETS, T_MAP, T_QUALITY, T_REVIEW, T_PREVIEW, T_EXPORT, T_KG, T_LOG = tabs
 
@@ -457,11 +460,11 @@ def render_mapping_editor(r) -> None:
             st.progress(min(1.0, fit))
         taken = [s for s, t in state.effective_mapping(include_pending=False).items() if t == choice and s != r.source_column]
         if taken:
-            st.markdown(f'<span class="live-bad">⚠ {choice} is already approved for “{taken[0]}”.</span>',
+            st.markdown(f'<span class="live-bad">Warning: {choice} is already approved for “{taken[0]}”.</span>',
                         unsafe_allow_html=True)
     preview = pd.DataFrame({"source value": samples, "goes to": [choice] * len(samples)})
     st.dataframe(preview, hide_index=True, use_container_width=True)
-    st.button("💾 Save mapping", key=f"savemap_{r.id}", type="primary", on_click=cb_edit_mapping, args=(r.id,))
+    st.button("Save mapping", key=f"savemap_{r.id}", type="primary", on_click=cb_edit_mapping, args=(r.id,))
 
 
 def render_value_editor(r) -> None:
@@ -495,7 +498,7 @@ def render_value_editor(r) -> None:
         else:
             default = "" if prop is None or prop == DROP else str(to_display(prop))
             val = b.text_input("new value", value=default, key=f"val_{r.id}_{i}", label_visibility="collapsed",
-                              placeholder="new value (empty = blank)")
+                               placeholder="new value (empty = blank)")
         if val == KEEP or (isinstance(val, str) and val.strip() == g["display"]):
             live[key] = ("keep", None)
             c.markdown('<div style="padding-top:6px;"><span class="meta">unchanged</span></div>', unsafe_allow_html=True)
@@ -503,7 +506,7 @@ def render_value_editor(r) -> None:
             out, err = coerce_value(field, None if val == BLANK else val)
             live[key] = ("err", err) if err else ("ok", out)
             if err:
-                c.markdown(f'<div style="padding-top:6px;"><span class="live-bad" style="word-break:break-word;">⚠ {html.escape(str(err))}</span></div>', unsafe_allow_html=True)
+                c.markdown(f'<div style="padding-top:6px;"><span class="live-bad" style="word-break:break-word;">Error: {html.escape(str(err))}</span></div>', unsafe_allow_html=True)
             else:
                 c.markdown(f'<div style="padding-top:6px;"><span class="live-ok">→ {html.escape("(blank)" if out is None else str(out))}</span></div>', unsafe_allow_html=True)
     # live preview of the affected rows
@@ -512,19 +515,19 @@ def render_value_editor(r) -> None:
         kind, out = live[key]
         for row in g["rows"][:5]:
             prev.append({"row": row, "before": g["display"],
-                         "after (live)": g["display"] if kind == "keep" else ("⚠ invalid" if kind == "err"
+                         "after (live)": g["display"] if kind == "keep" else ("Invalid" if kind == "err"
                                                                               else ("(blank)" if out is None else str(out)))})
     pdf = pd.DataFrame(prev[:25])
 
     def _hl(s):
-        return [f"background-color: rgba(217,160,111,.28); font-weight:700" if (a != b and not str(a).startswith("⚠"))
-                else ("background-color: rgba(244,114,182,.25)" if str(a).startswith("⚠") else "")
+        return [f"background-color: rgba(217,160,111,.28); font-weight:700" if (a != b and str(a) != "Invalid")
+                else ("background-color: rgba(244,114,182,.25)" if str(a) == "Invalid" else "")
                 for a, b in zip(pdf["after (live)"], pdf["before"])] if s.name == "after (live)" else [""] * len(s)
 
     st.caption("Live preview — updates as you change the values above")
     st.dataframe(pdf.style.apply(_hl), hide_index=True, use_container_width=True)
     bad = any(k == "err" for k, _ in live.values())
-    st.button("💾 Save values", key=f"savev_{r.id}", type="primary", disabled=bad,
+    st.button("Save values", key=f"savev_{r.id}", type="primary", disabled=bad,
               on_click=cb_edit_values, args=(r.id, [(k, g["display"]) for k, g in keys]))
 
 
@@ -532,9 +535,9 @@ def render_rec(r) -> None:
     head = f"{badge[r.status]} · {r.title} · conf {r.confidence:.2f}" + (f" · rev {r.revision}" if r.revision else "")
     with st.expander(head, expanded=(r.status == "escalated" or ss.open_rec == r.id)):
         if r.question:
-            st.markdown(f'<div class="question">❓ {r.question}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="question"><b>Question:</b> {r.question}</div>', unsafe_allow_html=True)
         if r.interpretation:
-            st.markdown(f'<div class="understood">🧠 <b>Understood as:</b> {r.interpretation}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="understood"><b>Understood as:</b> {r.interpretation}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="why"><b>Why:</b> {r.rationale}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="unc"><b>Uncertainty:</b> {r.uncertainty or "—"}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="meta">{ui.sev_pill(r.severity)} &nbsp; Raw column <code>{r.source_column or "—"}</code> '
@@ -554,10 +557,10 @@ def render_rec(r) -> None:
 
         a1, a2 = st.columns([1, 2])
         with a1:
-            st.button("✅ Accept", key=f"acc_{r.id}", type="primary", use_container_width=True,
+            st.button("Accept", key=f"acc_{r.id}", type="primary", use_container_width=True,
                       on_click=cb_accept, args=(r.id,))
             st.write("")
-            editing = st.toggle("✏️ Edit inline", key=f"editing_{r.id}")
+            editing = st.toggle("Edit inline", key=f"editing_{r.id}")
         with a2:
             ph = ("e.g. “This is Contents, not Building Value” · “ignore this column”"
                   if r.action_type == "column_mapping" else
@@ -565,7 +568,7 @@ def render_rec(r) -> None:
             with st.form(key=f"rejform_{r.id}", clear_on_submit=False, border=False):
                 st.text_area("Reject with a note — the agent will re-reason", key=f"note_{r.id}",
                              placeholder=ph, height=80)
-                st.form_submit_button("❌ Reject & re-reason", use_container_width=True,
+                st.form_submit_button("Reject & re-reason", use_container_width=True,
                                       on_click=cb_reject, args=(r.id,))
             if ss.get(f"note_err_{r.id}"):
                 st.error(ss[f"note_err_{r.id}"])
@@ -588,8 +591,8 @@ with T_REVIEW:
     show = b2.radio("Show", ["Open", "All", "Decided"], horizontal=True, label_visibility="collapsed")
     b3.caption("High-severity flags (negative values, future years, duplicates) always need an individual decision. "
                "Rejections go back to the agent, which re-reasons from your note.")
-    groups = {"column_mapping": "🧭 Column mappings", "data_correction": "🛠️ Data corrections",
-              "standardisation": "📏 Standardisation", "flag_for_review": "🚩 Flags for review"}
+    groups = {"column_mapping": "Column mappings", "data_correction": "Data corrections",
+              "standardisation": "Standardisation", "flag_for_review": "Flags for review"}
     any_shown = False
     for g, title in groups.items():
         items = [r for r in state.active_recs() if r.action_type == g]
@@ -605,7 +608,7 @@ with T_REVIEW:
         for r in items:
             render_rec(r)
     if not any_shown:
-        st.success("🎉 Nothing left to review. Go to **Export & audit** to apply the approved changes.")
+        st.success("Nothing left to review. Go to **Export & audit** to apply the approved changes.")
 
 # ---------------------------------------------------------------- before / after
 with T_PREVIEW:
@@ -637,7 +640,7 @@ with T_EXPORT:
     ok, reasons = orc.can_export(state)
     if not ok:
         st.error("Export blocked: " + "; ".join(reasons))
-    if st.button("▶️ Apply approved transformations", type="primary", disabled=not ok):
+    if st.button("Apply approved transformations", type="primary", disabled=not ok):
         try:
             with st.spinner("Applying approved items…"):
                 state.set_listener(live_pipeline)
@@ -651,10 +654,10 @@ with T_EXPORT:
             st.error(str(exc))
     if ss.files:
         d1, d2, d3, d4 = st.columns(4)
-        d1.download_button("⬇️ Cleaned_SOV.xlsx", ss.files["Cleaned_SOV.xlsx"], "Cleaned_SOV.xlsx", use_container_width=True)
-        d2.download_button("⬇️ Audit_Log.xlsx", ss.files["Audit_Log.xlsx"], "Audit_Log.xlsx", use_container_width=True)
-        d3.download_button("⬇️ Audit_Log.json", ss.files["Audit_Log.json"], "Audit_Log.json", use_container_width=True)
-        d4.download_button("⬇️ Summary.json", ss.files["Processing_Summary.json"], "Processing_Summary.json",
+        d1.download_button("Download Cleaned_SOV.xlsx", ss.files["Cleaned_SOV.xlsx"], "Cleaned_SOV.xlsx", use_container_width=True)
+        d2.download_button("Download Audit_Log.xlsx", ss.files["Audit_Log.xlsx"], "Audit_Log.xlsx", use_container_width=True)
+        d3.download_button("Download Audit_Log.json", ss.files["Audit_Log.json"], "Audit_Log.json", use_container_width=True)
+        d4.download_button("Download Summary.json", ss.files["Processing_Summary.json"], "Processing_Summary.json",
                            use_container_width=True)
         st.markdown(f"**Schema validation:** {state.summary.get('output_validation')}")
         st.dataframe(state.output_df.head(50), use_container_width=True)
@@ -673,7 +676,7 @@ with T_KG:
     k2.metric("Learned mappings", kgs["edges"].get("MAPS_TO", 0))
     k3.metric("Remembered rejections", kgs["edges"].get("REJECTED_AS", 0))
     k4.metric("Vectors", kgs["vector_memory"])
-    st.caption("Reset it from the sidebar (🧹 Reset knowledge graph).")
+    st.caption("Reset it from the sidebar (Reset knowledge graph).")
     learned = orc.kg.learned_edges()
     if learned:
         st.graphviz_chart(orc.kg.to_dot(), use_container_width=True)

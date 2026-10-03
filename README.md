@@ -1,14 +1,13 @@
 <div align="center">
 
 # SOV-it
-### **Agentic SOV Cleansing & Intelligence System**
-*An autonomous, multi-agent AI system for underwriting data transformation, schema mapping, and property anomaly reasoning.*
+### Agentic Statement of Values Cleansing and Intelligence System
+*An autonomous multi-agent platform for commercial property underwriting data transformation, schema mapping, and validation.*
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-7BDCB5.svg?style=flat)](LICENSE)
 [![Architecture: Multi-Agent](https://img.shields.io/badge/Architecture-Autonomous_Multi--Agent-1A2C47.svg?style=flat)](#high-level-system-architecture)
-[![Team Astra](https://img.shields.io/badge/Developed_by-Team_Astra-7BDCB5.svg?style=flat)](#team-astra)
+[![Team Astra](https://img.shields.io/badge/Developed_by-Team_Astra-7BDCB5.svg?style=flat)](#contributors-and-institutional-partners)
 
 ---
 
@@ -19,139 +18,120 @@
 
 ---
 
-## 📌 Executive Summary
+## Executive Summary
 
-Underwriting commercial property insurance requires processing unstructured, error-prone client **Statements of Values (SOV)** spreadsheets. In real-world underwriting workflows, disparate column headers, mixed alphanumeric notations, compound value errors, missing geographic markers, and inconsistent property construction codes introduce multi-million-dollar accumulation blindspots and manual cleansing delays.
+Underwriting commercial property insurance requires processing unstructured, non-standardized client Statements of Values (SOV) spreadsheets. Real-world client submissions frequently contain unaligned column headers, mixed alphanumeric notations, compound value errors, missing geographic attributes, and inconsistent building occupancy classifications. These defects lead to operational delays, accumulation blindspots, and manual data-entry overhead.
 
-**SOV-it** is an agentic, open-source AI platform that transforms arbitrary client SOVs into standardized, strictly-validated schemas. Designed around the core principle:
-> ***"The language model proposes; deterministic logic and human underwriters verify and commit."***
+**SOV-it** is an enterprise-grade agentic platform that automates the ingestion, mapping, validation, and transformation of complex client SOVs into standardized, verified schemas.
 
-The entire pipeline operates with **100% human-in-the-loop governance**, active graph memory across submissions, and a certified transformation gate guaranteeing zero schema drift.
+### Core Architectural Principle
+> **The language model proposes; deterministic logic and human underwriters verify and commit.**
+
+The platform enforces **100 percent human-in-the-loop governance**, persistent graph-based institutional memory across submissions, and a certified transformation gate guaranteeing zero schema drift.
 
 ---
 
-## 🏛️ High-Level System Architecture
+## High-Level System Architecture
 
 ```mermaid
-flowchart TD
-    classDef client fill:#1A2C47,stroke:#7BDCB5,stroke-width:2px,color:#FFFFFF;
-    classDef agent fill:#223859,stroke:#7BDCB5,stroke-width:1.5px,color:#FFFFFF;
-    classDef human fill:#2D3748,stroke:#FBBF24,stroke-width:2px,color:#FFFFFF;
-    classDef output fill:#142338,stroke:#10B981,stroke-width:2px,color:#FFFFFF;
-    classDef memory fill:#1E293B,stroke:#8B5CF6,stroke-width:1.5px,color:#FFFFFF;
+flowchart LR
+    %% Nodes
+    A["Raw Client SOV<br/>(Excel / CSV)"]
+    B["Agent 1<br/>Sheet & Header Discovery"]
+    C["Agent 2<br/>Hierarchical Schema Mapper"]
+    D["Agent 3<br/>Quality & Anomaly Engine"]
+    E{"Underwriter Review Gate<br/>(Human-in-the-Loop)"}
+    F["Agent 4<br/>Controlled Transformation"]
+    G["Standardized Output<br/>Cleaned_SOV.xlsx"]
+    H["Audit Log & Provenance<br/>Audit_Log.xlsx / JSON"]
+    KG[("Knowledge Graph<br/>& Vector Memory")]
 
-    RawSOV["📄 Raw Client SOV<br/>(.xlsx, .xls, .csv, multi-sheet)"]:::client --> A1
+    %% Sequential Pipeline Flow
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E -->|Approved Transformations| F
+    E -.->|Rejection Feedback Loop| D
+    F --> G
+    F --> H
 
-    subgraph Pipeline ["Autonomous Agent Pipeline"]
-        A1["📑 Agent 1: Sheet & Header Discovery<br/>• Zero-assumed schema scan<br/>• Density & heuristic scoring<br/>• Multi-row & merged cell resolution"]:::agent
-        A1 -->|Active Property Grid| A2
+    %% Memory Interactions
+    C <===>|Bi-directional Lookup| KG
+    F -.->|Sign-off Updates| KG
 
-        A2["🧭 Agent 2: Hierarchical Schema Mapping<br/>• Pass 0: KG Memory + Vector Search<br/>• Pass 1: Curated Synonyms + RapidFuzz<br/>• Pass 2: Semantic SBERT + Value Profiling<br/>• Pass 3: Constrained LLM Reasoning"]:::agent
-        A2 -->|Candidate Mappings| A3
+    %% Styling
+    classDef default fill:#1A2C47,stroke:#7BDCB5,stroke-width:1.5px,color:#FFFFFF,font-family:sans-serif;
+    classDef gate fill:#223859,stroke:#FBBF24,stroke-width:2px,color:#FFFFFF,font-family:sans-serif;
+    classDef output fill:#142338,stroke:#10B981,stroke-width:1.5px,color:#FFFFFF,font-family:sans-serif;
+    classDef memory fill:#1E293B,stroke:#8B5CF6,stroke-width:1.5px,color:#FFFFFF,font-family:sans-serif;
 
-        A3["🩺 Agent 3: Data Quality & Anomaly Engine<br/>• 20+ Underwriting Validation Rules<br/>• Compound Multi-field Anomaly Detection<br/>• Adaptive Neural Re-reasoning"]:::agent
-    end
-
-    subgraph Memory ["Continuous Learning Layer"]
-        KG[("🧠 Knowledge Graph & Vector Memory<br/>• NetworkX Graph Engine<br/>• Learned Edge Weighting<br/>• Persistent Historical Memory")]:::memory
-    end
-
-    A2 <===>|Bi-directional Query| KG
-    A3 -->|Quality Report & Issues| HumanGate
-
-    subgraph Governance ["Human-in-the-Loop Gate"]
-        HumanGate{{"👤 Underwriter Review Gate<br/>• One-click Approval / Bulk Accept<br/>• Dynamic In-line Value Editing<br/>• Rejection with Feedback Notes"}}:::human
-    end
-
-    HumanGate -->|Rejection Note / Feedback| A3
-    HumanGate -->|Approved Transformation Plan| A4
-
-    subgraph Execution ["Deterministic Execution & Artifacts"]
-        A4["📦 Agent 4: Controlled Transformation<br/>• Immutable Source DataFrame<br/>• Exact 17-Column Target Reindexing<br/>• Strict Type Coercion & Gate Validation"]:::agent
-        A4 --> CleanSOV["📗 Cleaned_SOV.xlsx<br/>(Standardized Schema)"]:::output
-        A4 --> AuditLog["📋 Audit_Log.xlsx & .json<br/>(Cell-level Provenance)"]:::output
-        A4 --> Summary["📊 Processing_Summary.json<br/>(Governance Record)"]:::output
-    end
-
-    A4 -.->|Sign-off Feedback| KG
+    class E gate;
+    class G,H output;
+    class KG memory;
 ```
 
 ---
 
-## 🤖 The Four Collaborating Agents
+## Autonomous Agent Architecture
 
-| Agent | Core Responsibilities | Technology & Technique |
+| Agent | Responsibility | Core Methodology |
 | :--- | :--- | :--- |
-| **Agent 1: Sheet & Header Discovery** | Analyzes multi-tab workbooks without pre-configured assumptions. Scores header candidates across rows 1–30 based on text ratio, density, insurance vocabulary, and value distribution below. Identifies totals rows and merges. | Heuristic scoring, cell-density distribution, OpenPyXL grid parsing. |
-| **Agent 2: Hierarchical Schema Mapper** | Executes a multi-tier resolution strategy to map arbitrary source columns into the 17 standard insurance target fields: <br>• **Tier 0:** Knowledge Graph Memory & historical vector cache.<br>• **Tier 1:** Curated synonym dictionaries & RapidFuzz similarity ($\ge 0.75$).<br>• **Tier 2:** Semantic Sentence-BERT embeddings blended with value profiling.<br>• **Tier 3:** Zero-shot constrained LLM reasoning on remaining ambiguities. | NetworkX Graph, Sentence-BERT, RapidFuzz, Pluggable LLM. |
-| **Agent 3: Data Quality & Neural Reasoning** | Validates 20+ underwriting rules (currency extraction, K/M/B expansion, negative values, construction code normalization, ZIP/State matching, Year Built plausibility). Automatically generates plain-English rationale explanations and executes **adaptive re-reasoning loops** upon underwriter rejection. | Rulebook engine, regex parsing, LLM-based explanatory reasoning. |
-| **Agent 4: Controlled Transformation** | Purely deterministic code with zero LLM hallucinations. Enforces strict schema gates, applies only underwriter-approved transformations, preserves raw sources on an immutable copy, and compiles cell-level audit logs. | Pandas, OpenPyXL, cryptographic provenance hashing. |
+| **Agent 1: Sheet and Header Discovery** | Analyzes multi-tab workbooks without assumed structure. Scans candidates across rows 1–30 based on text ratio, density, insurance domain vocabulary, and value distribution below. Identifies totals rows, title banners, and merged cells. | Density-distribution heuristics, vocabulary scoring, OpenPyXL grid parsing. |
+| **Agent 2: Hierarchical Schema Mapper** | Maps source columns to the 17 standard insurance target fields via a tiered resolution strategy: <br>• **Tier 0:** Knowledge Graph historical memory and vector search.<br>• **Tier 1:** Curated synonym dictionaries and RapidFuzz token matching ($\ge 0.75$).<br>• **Tier 2:** Semantic Sentence-BERT embeddings blended with value profiling.<br>• **Tier 3:** Zero-shot constrained LLM reasoning for remaining ambiguous headers. | NetworkX Graph, Sentence-BERT, RapidFuzz, Pluggable LLM. |
+| **Agent 3: Data Quality and Reasoning Engine** | Validates over 20 underwriting rules including currency parsing, multiplier expansion (K, M, B), negative value detection, construction code normalization, ZIP/State consistency, and Year Built plausibility. Generates formal explanations and executes **adaptive re-reasoning loops** upon underwriter rejection. | Rulebook engine, regular expressions, contextual re-reasoning. |
+| **Agent 4: Controlled Transformation** | Deterministic transformation engine with zero generative hallucination risk. Applies only underwriter-approved modifications, retains raw data on an immutable source copy, enforces strict schema typing, and generates cell-level provenance audit logs. | Pandas, OpenPyXL, cryptographic provenance hashing. |
 
 ---
 
-## 🎨 Dithered Design System (TypeUI-Compliant)
+## Target Schema Specification (17 Standard Fields)
 
-SOV-it features a bespoke retro-modern **Dithered UI** engineered in Streamlit according to the [TypeUI Dithered Design Specification](https://www.typeui.sh/design-skills/dithered):
+SOV-it standardizes all incoming data into the 17-field commercial insurance property schema:
 
-- **Atmospheric Dot-Pattern Textures**: Multi-layered SVG and CSS radial-gradient stippling simulating 1-bit and 2-bit halftone screens over deep maritime navy (`#1A2C47`).
-- **Technical Typography Hierarchy**:
-  - **Display / Headers**: *Space Grotesk* for technical headings and hero banners.
-  - **Precision Tokens**: *IBM Plex Mono* for KPI values, severity badges, confidence ratings, and tabular metrics.
-  - **Body / Documentation**: *Montserrat* for clear readability.
-- **Dithered Micro-interactions**: Diagonal stippled progress tracking bars, tactile 1px high-contrast borders, and focused compound risk heatmaps.
-
----
-
-## 🎯 Target Schema (17 Standard SOV Fields)
-
-SOV-it maps and cleanses messy data into the industry standard 17-attribute insurance schema:
-
-| Target Field | Data Type | Permissible Range / Formats | Validation / Cleansing Logic |
+| Target Field | Data Type | Permissible Range / Formats | Validation and Cleansing Logic |
 | :--- | :--- | :--- | :--- |
 | `Location ID` | String / Alphanumeric | Unique property identifier | Trimmed, deduplicated, preserves leading zeros |
 | `Street Address` | String | Postal street address | Cleaned punctuation, casing standardized |
 | `City` | String | City name | Standardized casing, whitespace stripped |
-| `State` | String | 2-Letter US Postal Code (`CA`, `NY`) | Resolves full state names to 2-letter codes |
+| `State` | String | 2-Letter US Postal Code (`CA`, `NY`) | Resolves full state names to standard 2-letter codes |
 | `Zip Code` | String | 5-Digit or 9-Digit (`12345`, `12345-6789`) | Padded leading zeros, standardizes hyphenation |
 | `County` | String | County jurisdiction | Normalized naming conventions |
 | `Country` | String | ISO country code or standard name | Resolves spelling drift (`USA`, `US`, `United States`) |
-| `Building Value` | Float | $\ge 0$ | Strips currency (`$`, `€`), expands `K`/`M`/`B` |
+| `Building Value` | Float | $\ge 0$ | Strips currency symbols, expands numeric multipliers |
 | `Contents Value` | Float | $\ge 0$ | Numeric parsing, negative values flagged |
 | `Business Interruption Value` | Float | $\ge 0$ | Standardized financial evaluation |
-| `Total Insurable Value (TIV)` | Float | $\ge 0$ | Cross-checked against sum of components |
+| `Total Insurable Value (TIV)` | Float | $\ge 0$ | Cross-checked against sum of component values |
 | `Square Footage` | Float | $\ge 0$ | Parses commas and area units (`sq ft`, `sf`) |
 | `Number of Stories` | Integer | $\ge 1$ | Cast to whole integers; fractional stories flagged |
-| `Year Built` | Integer | $1700 \le \text{Year} \le \text{Current Year}$ | Blocks future years; parses 2-digit years |
-| `Construction Type` | Categorical | ISO Construction Classes (1–6, `MFR`, `NC`) | Normalized to standard structural codes |
+| `Year Built` | Integer | $1700 \le \text{Year} \le \text{Current Year}$ | Flags future years; resolves two-digit years |
+| `Construction Type` | Categorical | ISO Construction Classes (1–6, `MFR`, `NC`) | Normalized to standard structural classifications |
 | `Occupancy Type` | Categorical | Commercial occupancy codes (`Office`, `Retail`) | Curated insurance categorization |
-| `Sprinkler Flag` | Categorical | `Y` / `N` / Valid sprinkler class (`13`, `13R`) | Standardized binary / code indicators |
+| `Sprinkler Flag` | Categorical | `Y` / `N` / Valid sprinkler class (`13`, `13R`) | Standardized binary and sprinkler class indicators |
 
 ---
 
-## 🚀 Quickstart & Installation
+## Installation and Quickstart
 
-### Option 1: Run Locally
+### Local Setup
 
 ```bash
 # 1. Clone repository
 git clone https://github.com/ranjanaashish/SOV-it.git
 cd SOV-it
 
-# 2. Set up virtual environment
+# 2. Configure virtual environment
 python -m venv .venv
 source .venv/bin/activate       # On Windows: .venv\Scripts\activate
 
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Launch the application
+# 4. Run the application
 streamlit run app.py
 ```
-*Access the local interface at `http://localhost:8501`.*
+*The local interface will be accessible at `http://localhost:8501`.*
 
----
-
-### Option 2: Run with Docker Compose
+### Docker Deployment
 
 ```bash
 docker compose up -d --build
@@ -159,28 +139,28 @@ docker compose up -d --build
 
 ---
 
-## ⚙️ Pluggable LLM Support
+## LLM Configuration and Provider Support
 
-SOV-it supports zero-friction switching between local open-weights models and ultra-fast cloud inference engines directly via the sidebar **⚙️ LLM & Provider Settings**:
+SOV-it supports multiple inference backends configurable directly via the sidebar:
 
-- ⚡ **Groq Cloud** (`llama-3.3-70b-versatile` — ~500 tokens/sec)
-- 🧠 **Ollama Local** (`qwen2.5:7b-instruct` / `qwen2.5:3b-instruct` — 100% on-prem offline privacy)
-- 🌐 **OpenAI / Azure OpenAI** (`gpt-4o-mini`, `gpt-4o`)
-- 💎 **Google Gemini** (`gemini-1.5-flash` via OpenAI-compatible endpoint)
-- 🔌 **Custom OpenAI Endpoints** (vLLM, LM Studio, LocalAI)
-- 🛡️ **Rules-Only Deterministic Mode** (Instant execution with zero network dependency)
+- **Groq Cloud** (`llama-3.3-70b-versatile` — high-throughput inference)
+- **Ollama Local** (`qwen2.5:7b-instruct` / `qwen2.5:3b-instruct` — fully on-premise, offline execution)
+- **OpenAI / Azure OpenAI** (`gpt-4o-mini`, `gpt-4o`)
+- **Google Gemini** (`gemini-1.5-flash` via OpenAI-compatible endpoint)
+- **Custom OpenAI Endpoints** (vLLM, LM Studio, LocalAI)
+- **Rules-Only Deterministic Mode** (Instant execution with zero network dependency)
 
 ---
 
-## 👥 Contributors & Team Astra
+## Contributors and Institutional Partners
 
-Developed with pride by **Team Astra** in collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)**:
+Developed by **Team Astra** in collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)**:
 
-| Contributor | Profile & Contributions |
+| Contributor | Profile and Role |
 | :--- | :--- |
-| **Aashish Ranjan** | Core Architecture, Multi-Agent Orchestration & Streamlit UI ([@ranjanaashish](https://github.com/ranjanaashish)) |
-| **Aastha Chhabra** | Machine Learning, Model Research & Underwriting Data Intelligence ([@aasthaaachhabra](https://github.com/aasthaaachhabra)) |
-| **ADROSONIC Hackathon** | Hackathon Host, Insurance Domain Governance & Advisory ([@ADROSONICHackathon](https://github.com/ADROSONICHackathon)) |
+| **Aashish Ranjan** | Core Architecture, Multi-Agent Orchestration, and System Implementation ([@ranjanaashish](https://github.com/ranjanaashish)) |
+| **Aastha Chhabra** | Machine Learning Research, Underwriting Data Modeling, and Evaluation ([@aasthaaachhabra](https://github.com/aasthaaachhabra)) |
+| **ADROSONIC Hackathon** | Hackathon Host, Domain Governance, and Advisory Partner ([@ADROSONICHackathon](https://github.com/ADROSONICHackathon)) |
 
 ---
 

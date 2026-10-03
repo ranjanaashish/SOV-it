@@ -223,7 +223,7 @@ class ReasoningAgent:
             base.rationale = f"After your note ('{note}') the agent found no confident alternative. {why}"
             base.uncertainty = m.uncertainty or "No candidate above 0.50 confidence."
             base.question = (f"Which target field should '{src}' map to (samples: {', '.join(m.sample_values[:3])})? "
-                             f"Use ✏️ Edit to pick it, or approve to exclude the column.")
+                             f"Use Edit inline to pick it, or approve to exclude the column.")
             return base
         base.interpretation = f"Understood: not {', '.join(sorted(rejected))}; next best match is {target}."
         return self._map_rec(base, target, conf, method, f"Revised after feedback: {why}", taken)
@@ -347,8 +347,8 @@ class ReasoningAgent:
             base.title = f"Needs your decision: {rec.title}"
             base.interpretation = "Could not interpret the note." + (f" {serr}" if serr else "")
             base.rationale = (f"The agent could not turn '{note}' into an action. Try e.g. 'keep', 'blank', "
-                              f"'remove rows', 'set to Y', or 'Partial means N, 100% is Y' — or use ✏️ Edit.")
-            base.question = "What should happen to these values? Use ✏️ Edit to enter them directly."
+                              f"'remove rows', 'set to Y', or 'Partial means N, 100% is Y' — or use Edit inline.")
+            base.question = "What should happen to these values? Use Edit inline to enter them directly."
         base.confidence = 0.88 if base.status == "pending" else 0.3
         base.uncertainty = ("Revised from your note; please confirm." if base.status == "pending"
                             else "Instruction unclear.")

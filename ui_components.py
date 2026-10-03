@@ -666,14 +666,14 @@ textarea {{
 """
 
 STAGE_META = {
-    "ingest": ("📥", "Upload", "Intake"),
-    "discovery": ("📑", "Sheets & header", "Agent 1"),
-    "mapping": ("🧭", "Mappers", "Agent 2"),
-    "quality": ("🩺", "Quality report", "Agent 3"),
-    "review": ("✅", "Review gate", "Human Review"),
-    "transform": ("📦", "Export & audit", "Agent 4"),
+    "ingest": ("01", "Upload", "Intake"),
+    "discovery": ("02", "Sheets & header", "Agent 1"),
+    "mapping": ("03", "Mappers", "Agent 2"),
+    "quality": ("04", "Quality report", "Agent 3"),
+    "review": ("05", "Review gate", "Human Review"),
+    "transform": ("06", "Export & audit", "Agent 4"),
 }
-PILL = {"idle": "waiting", "running": "working", "done": "✓ done", "blocked": "blocked", "error": "error"}
+PILL = {"idle": "waiting", "running": "working", "done": "Done", "blocked": "blocked", "error": "error"}
 
 
 def _load_b64(path: Path) -> str:
@@ -784,7 +784,7 @@ def pipeline_html(state: SOVState | None) -> str:
         if state is not None and s == "review":
             n = sum(1 for r in state.recommendations if r.revision > 0)
             if n:
-                loop = f'<div class="loop">↺ {n} re-reasoned</div>'
+                loop = f'<div class="loop">Re-reasoned: {n}</div>'
         msg = html.escape(state.stages[s].message) if state is not None else ""
         sub_text = html.escape(_stage_sub(s, state))
         parts.append(
@@ -866,7 +866,7 @@ def score_interpretation(state: SOVState) -> str:
     
     return f"""
     <div class="chart-interpretation" style="border-left-color:{color};">
-        <span style="font-weight:700; color:{color};">💡 Executive Health Summary ({score:.0f}/100 · {label}):</span>
+        <span style="font-weight:700; color:{color};">Executive Health Summary ({score:.0f}/100 · {label}):</span>
         The dataset contains <b>{rows:,} property rows</b>, with <b>{clean_pct:.0%} passing all validation checks cleanly</b>. 
         <b>{flagged_pct:.0%} of rows ({flagged:,} properties)</b> trigger one or more anomaly flags. 
         The composite score weights 50% field completeness, 30% row-level correctness, and 20% schema mapping confidence.
@@ -947,7 +947,7 @@ def completeness_interpretation(state: SOVState) -> str:
         
     return f"""
     <div class="chart-interpretation">
-        <div style="font-weight:700; color:#7bdcb5; margin-bottom:4px;">📊 Completeness Interpretation</div>
+        <div style="font-weight:700; color:#7bdcb5; margin-bottom:4px;">Completeness Interpretation</div>
         {' '.join(parts)}
     </div>
     """
@@ -979,7 +979,7 @@ def issues_interpretation(state: SOVState) -> str:
     if not issues:
         return """
         <div class="chart-interpretation">
-            <div style="font-weight:700; color:#7bdcb5; margin-bottom:4px;">🩺 Issue Distribution Interpretation</div>
+            <div style="font-weight:700; color:#7bdcb5; margin-bottom:4px;">Issue Distribution Interpretation</div>
             Zero rule violations or syntax anomalies detected. The dataset conforms to all underwriting validation checks.
         </div>
         """
@@ -1001,7 +1001,7 @@ def issues_interpretation(state: SOVState) -> str:
         
     return f"""
     <div class="chart-interpretation">
-        <div style="font-weight:700; color:#7bdcb5; margin-bottom:4px;">🩺 Issue Distribution Interpretation</div>
+        <div style="font-weight:700; color:#7bdcb5; margin-bottom:4px;">Issue Distribution Interpretation</div>
         {' '.join(parts)}
     </div>
     """
@@ -1071,7 +1071,7 @@ def heatmap_interpretation(state: SOVState) -> str:
     
     return f"""
     <div class="chart-interpretation">
-        <div style="font-weight:700; color:#7bdcb5; margin-bottom:4px;">🔥 Hotspot Matrix Interpretation</div>
+        <div style="font-weight:700; color:#7bdcb5; margin-bottom:4px;">Hotspot Matrix Interpretation</div>
         {' '.join(parts)}
     </div>
     """
