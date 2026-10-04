@@ -121,13 +121,13 @@ SOV-it supports multiple inference backends configurable directly via the sideba
 
 ## Contributors and Institutional Partners
 
-Developed by **Team Astra** in collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)**:
+Developed by **Team Astra** as part of **ADROSONIC Build Hackathon** in collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)**:
 
 | Contributor | Profile and Role |
 | :--- | :--- |
-| **Aashish Ranjan** | Core Architecture, Multi-Agent Orchestration, and System Implementation ([@ranjanaashish](https://github.com/ranjanaashish)) |
-| **Aastha Chhabra** | Machine Learning Research, Underwriting Data Modeling, and Evaluation ([@aasthaaachhabra](https://github.com/aasthaaachhabra)) |
-| **ADROSONIC Hackathon** | Hackathon Host, Domain Governance, and Advisory Partner ([@ADROSONICHackathon](https://github.com/ADROSONICHackathon)) |
+| **Aashish Ranjan** | Final year IMSc. QEDS Student ([@ranjanaashish](https://github.com/ranjanaashish)) |
+| **Aastha Chhabra** | Final year IMSc. QEDS Student ([@aasthaaachhabra](https://github.com/aasthaaachhabra)) |
+| **ADROSONIC Hackathon** | Hackathon Host ([@ADROSONICHackathon](https://github.com/ADROSONICHackathon)) |
 
 ---
 
