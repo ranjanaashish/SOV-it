@@ -16,8 +16,7 @@
 *As part of the ADROSONIC Build Hackathon*  
 *In collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)***
 
-App link: sov-it.streamlit.app
-
+**Live App:** [sov-it.streamlit.app](https://sov-it.streamlit.app/)
 </div>
 
 ---
