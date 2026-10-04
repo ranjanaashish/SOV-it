@@ -13,8 +13,7 @@
 ---
 
 **Developed by Team Astra**  
-*As part of the ADROSONIC Build Hackathon*  
-*In collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)***
+
 
 **Live App:** [sov-it.streamlit.app](https://sov-it.streamlit.app/)
 </div>
@@ -133,7 +132,7 @@ SOV-it supports multiple inference backends configurable directly via the sideba
 
 ## Contributors and Institutional Partners
 
-Developed by **Team Astra** as part of **ADROSONIC Build Hackathon** in collaboration with **Adrosonic** and **Birla Institute of Technology, Mesra (BIT Mesra)**:
+Developed by **Team Astra**:
 
 | Contributor | Profile and Role |
 | :--- | :--- |
