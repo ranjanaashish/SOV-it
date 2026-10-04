@@ -139,7 +139,6 @@ Developed by **Team Astra** as part of **ADROSONIC Build Hackathon** in collabor
 | :--- | :--- |
 | **Aashish Ranjan** | Final year IMSc. QEDS Student ([@ranjanaashish](https://github.com/ranjanaashish)) |
 | **Aastha Chhabra** | Final year IMSc. QEDS Student ([@aasthaaachhabra](https://github.com/aasthaaachhabra)) |
-| **ADROSONIC Hackathon** | Hackathon Host ([@ADROSONICHackathon](https://github.com/ADROSONICHackathon)) |
 
 ---
 
