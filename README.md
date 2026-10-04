@@ -7,6 +7,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-7BDCB5.svg?style=flat)](LICENSE)
 [![Architecture: Multi-Agent](https://img.shields.io/badge/Architecture-Autonomous_Multi--Agent-1A2C47.svg?style=flat)](#high-level-system-architecture)
+[![Deploy with Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=ranjanaashish/SOV-it&branch=main&mainModule=app.py)
 [![Team Astra](https://img.shields.io/badge/Developed_by-Team_Astra-7BDCB5.svg?style=flat)](#contributors-and-institutional-partners)
 
 ---
@@ -97,6 +98,17 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 *The local interface will be accessible at `http://localhost:8501`.*
+
+### Streamlit Community Cloud (1-Click Deployment)
+
+Deploy directly to Streamlit Community Cloud:
+
+[![Deploy with Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=ranjanaashish/SOV-it&branch=main&mainModule=app.py)
+
+1. Click the **Deploy with Streamlit** badge above.
+2. Sign in with GitHub.
+3. Confirm repository (`ranjanaashish/SOV-it`), branch (`main`), and main file path (`app.py`).
+4. Click **Deploy!**
 
 ### Docker Deployment
 
