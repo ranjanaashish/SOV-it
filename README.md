@@ -8,12 +8,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-7BDCB5.svg?style=flat)](LICENSE)
 [![Architecture: Multi-Agent](https://img.shields.io/badge/Architecture-Autonomous_Multi--Agent-1A2C47.svg?style=flat)](#high-level-system-architecture)
 [![Deploy with Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=ranjanaashish/SOV-it&branch=main&mainModule=app.py)
-[![Team Astra](https://img.shields.io/badge/Developed_by-Team_Astra-7BDCB5.svg?style=flat)](#contributors-and-institutional-partners)
 
 ---
-
-**Developed by Team Astra**  
-
 
 **Live App:** [sov-it.streamlit.app](https://sov-it.streamlit.app/)
 </div>
@@ -130,14 +126,12 @@ SOV-it supports multiple inference backends configurable directly via the sideba
 - **Rules-Only Deterministic Mode** (Instant execution with zero network dependency)
 ---
 
-## Contributors and Institutional Partners
-
-Developed by **Team Astra**:
+## Contributors
 
 | Contributor | Profile and Role |
 | :--- | :--- |
-| **Aashish Ranjan** | Final year IMSc. QEDS Student ([@ranjanaashish](https://github.com/ranjanaashish)) |
-| **Aastha Chhabra** | Final year IMSc. QEDS Student ([@aasthaaachhabra](https://github.com/aasthaaachhabra)) |
+| **Aashish Ranjan** |  ([@ranjanaashish](https://github.com/ranjanaashish)) |
+| **Aastha Chhabra** |  ([@aasthaaachhabra](https://github.com/aasthaaachhabra)) |
 
 ---
 
